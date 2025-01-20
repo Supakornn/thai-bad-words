@@ -1,5 +1,5 @@
 {
-  "name": "thai-bad-words",
+  "name": "@sit-sandbox/thai-bad-words",
   "version": "1.0.2",
   "description": "A package to detect bad words in Thai language.",
   "main": "dist/index.js",
