@@ -109,7 +109,7 @@ console.log(badWords); // Logs the list of bad words
 ## Example
 
 ```typescript
-import { checkBadWords, addBadWords, addPrefixes, addIgnoreList, removeBadWords, getBadWords } from './badWordsDetection';
+import { checkBadWords, addBadWords, addPrefixes, addIgnoreList, removeBadWords, getBadWords } from 'thai-bad-words';
 
 // Add a new prefix
 addPrefixes(["พี่"]);
