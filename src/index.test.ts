@@ -18,8 +18,8 @@ describe('Thai Bad Words Detector', () => {
   });
 
   test('should allow adding new bad words', () => {
-    addBadWords(['test123']);
-    expect(() => checkBadWords('test123')).toThrow('Bad words detected');
+    addBadWords(['Hello']);
+    expect(() => checkBadWords('Hello')).toThrow('Bad words detected');
   });
 
   test('should allow removing bad words', () => {
