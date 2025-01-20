@@ -13,7 +13,6 @@ A powerful TypeScript library for detecting inappropriate Thai words in text con
 - 🎯 Smart detection combining prefixes and root words
 - 🚫 Customizable ignore list for false positives
 - 🔄 Dynamic updates to word lists
-- ⚡ Case-insensitive matching
 - 🛠️ Easy to integrate and configure
 
 ## 📦 Installation
