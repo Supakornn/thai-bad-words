@@ -1,135 +1,135 @@
+# 🔍 Thai Bad Words Detection Library
 
-# Bad Words Detection Library
+<div align="right">
+  <a href="README.md">English</a> | <a href="README.th.md">ภาษาไทย</a>
+</div>
 
-## Overview
-This library is designed to detect bad words in a given input string. It provides the ability to:
+## 📖 Overview
 
-- Detect bad words by combining common prefixes and root words.
-- Skip checks for certain phrases or words using an ignore list.
-- Dynamically add new prefixes, root words, or ignore words.
+A powerful TypeScript library for detecting inappropriate Thai words in text content. Perfect for content moderation, chat filters and other.
 
-The bad words detection is case-insensitive and considers a list of common prefixes and root words for matching.
+## ✨ Key Features
 
-## Installation
+- 🎯 Smart detection combining prefixes and root words
+- 🚫 Customizable ignore list for false positives
+- 🔄 Dynamic updates to word lists
+- ⚡ Case-insensitive matching
+- 🛠️ Easy to integrate and configure
 
-To use this library, simply import it into your TypeScript project.
+## 📦 Installation
 
-### Using npm:
+Choose your preferred package manager:
+
 ```bash
+# Using npm
 npm install thai-bad-words
-```
 
-### Or using yarn:
-```bash
+# Using yarn
 yarn add thai-bad-words
 ```
 
-## Functions
+## 🛠️ API Reference
 
-### `generateBadWords()`
-- **Description**: This internal function generates a complete list of bad words by combining each prefix with every root word, and adds all the root words to the list.
-- **Usage**: Automatically called when prefixes or root words are modified.
+### Core Functions
 
-### `addPrefixes(newPrefixes: string[]): void`
-- **Description**: Adds new prefixes to the list of prefixes, which are then combined with the root words to form bad words.
-- **Parameters**:
-  - `newPrefixes`: An array of strings containing new prefixes to add.
-- **Usage**:
+#### 🔍 `checkBadWords(input: string): void`
+
 ```typescript
-addPrefixes(["พี่", "หนู"]);
+// Throws an error if bad words are found
+checkBadWords("some text");
 ```
 
-### `addIgnoreList(newIgnoreWords: string[]): void`
-- **Description**: Adds new words to the ignore list. If any of these words are present in the input string, the bad words check will be skipped for that input.
-- **Parameters**:
-  - `newIgnoreWords`: An array of strings containing new words to add to the ignore list.
-- **Usage**:
+#### ➕ `addBadWords(newBadWords: string[]): void`
+
 ```typescript
-addIgnoreList(["หีบ", "สัสดี"]);
+addBadWords(["word1", "word2"]);
 ```
 
-### `addBadWords(newBadWords: string[]): void`
-- **Description**: Adds new root words to the list of bad words. The system will regenerate the bad words list automatically.
-- **Parameters**:
-  - `newBadWords`: An array of strings containing new root words.
-- **Usage**:
+#### 🚫 `addIgnoreList(newIgnoreWords: string[]): void`
+
 ```typescript
-addBadWords(["โง่", "บ้า"]);
+addIgnoreList(["false_positive1", "false_positive2"]);
 ```
 
-### `removeBadWords(wordsToRemove: string[]): void`
-- **Description**: Removes specified root words from the list of bad words.
-- **Parameters**:
-  - `wordsToRemove`: An array of strings containing words to remove from the root words list.
-- **Usage**:
+#### ➕ `addPrefixes(newPrefixes: string[]): void`
+
 ```typescript
-removeBadWords(["บ้า"]);
+addPrefixes(["prefix1", "prefix2"]);
 ```
 
-### `checkBadWords(input: string): void`
-- **Description**: Checks if a string contains any bad words. If any bad words are found, it throws an error with the detected bad words.
-- **Parameters**:
-  - `input`: The string to check for bad words.
-- **Usage**:
+#### ❌ `removeBadWords(wordsToRemove: string[]): void`
+
 ```typescript
-checkBadWords("ไอสัสดี"); // This will throw an error if bad words are found
+removeBadWords(["word1"]);
 ```
 
-### `getBadWords(): string[]`
-- **Description**: Returns the current list of all bad words.
-- **Usage**:
+#### 📋 `getBadWords(): string[]`
+
 ```typescript
 const badWords = getBadWords();
-console.log(badWords); // Logs the list of bad words
 ```
 
-## Configuration
-
-### `prefixes`
-- **Description**: A list of common prefixes that will be combined with root words to form bad words.
-- **Default**:
-```typescript
-["กู", "มึง", "ไอ้", "อี", "ไอ", "ผม", "คุณ", "กระผม", "เธอ", "พ่อ", "แม่", "นาย"]
-```
-
-### `ignoreList`
-- **Description**: A list of words or phrases that will be ignored during bad words detection.
-- **Default**:
-```typescript
-["หีบ", "สัสดี", "หน้าหีบ", "ตด"]
-```
-
-### `rootWords`
-- **Description**: A list of root words that are considered bad words.
-- **Default**:
-```typescript
-["ควย", "เหี้ย", "หี", "สัส", "เชี่ย", "แรด", "กระหรี่", "ชิบหาย", "ตอแหล", "ฟาย", "แม่ง", "แสด", "ถุย", "เดรัจฉาน", "ชาติชั่ว", "นรก", "หมา", "หมอย", "สัตว์", "จัญไร", "เลว", "ทราม", "สถุน", "ระยำ", "อัปรีย์", "ต่ำตม", "กาก", "ส้นตีน", "หิวตีน", "ส้นตีน", "ขยะ", "ปิศาจ", "ขี้แพ้", "บัดซบ", "จังไร", "โสโครก", "เฮงซวย", "ตลาดล่าง", "ควาย", "ปัญญาอ่อน", "เส็งเคร็ง", "โง่", "โง่เง่า", "กะหรี่", "ดอกทอง", "ดอกกระหรี่", "บ้า", "ควย", "มึง", "อีดอก", "หน้าปลวก"]
-```
-
-## Example
+## 🌟 Usage Example
 
 ```typescript
-import { checkBadWords, addBadWords, addPrefixes, addIgnoreList, removeBadWords, getBadWords } from 'thai-bad-words';
+import { checkBadWords, addBadWords, addIgnoreList } from "thai-bad-words";
 
-// Add a new prefix
-addPrefixes(["พี่"]);
+// Add words to ignore
+addIgnoreList(["หีบ", "สัสดี"]);
 
-// Add a new ignore word
-addIgnoreList(["หนู"]);
+// Add new bad words
+addBadWords(["โง่", "บ้า"]);
 
-// Check a string for bad words
+// Check text
 try {
-  checkBadWords("ไอสัส");
+  checkBadWords("some text to check");
 } catch (error) {
-  console.log(error.message);  // Output: "Bad words detected! Found: ไอสัส"
+  console.log("❌ Bad word detected:", error.message);
 }
-
-// Add a new root word
-addBadWords(["บ้า"]);
-
-// Get the current bad words list
-console.log(getBadWords());
 ```
 
-## Conclusion
-This library provides a flexible way to detect and manage bad words in text input. With the ability to add prefixes, root words, and ignore specific phrases, it can be easily customized to meet various needs. Whether you're building a chat filter or a content moderation tool, this system offers a reliable solution to detect inappropriate language.
+## 📝 Default Configuration
+
+### 🔤 Prefixes
+
+Common prefixes used for word combinations:
+
+```typescript
+["กู", "มึง", "ไอ้", "อี", "ไอ", "ผม", "คุณ", "กระผม", "เธอ", "พ่อ", "แม่", "นาย"];
+```
+
+### 🚫 Ignore List
+
+Words that should be skipped during detection:
+
+```typescript
+["หีบ", "สัสดี", "หน้าหีบ", "ตด"];
+```
+
+### 📋 Root Words
+
+Base inappropriate words (shortened for README):
+
+```typescript
+["ควย", "เหี้ย", "หี", "สัส", "เชี่ย" /* ... and more ... */];
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+
+- 🐛 Report bugs
+- 💡 Suggest new features
+- 📝 Improve documentation
+- 🔧 Submit pull requests
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 💬 Support
+
+If you have any questions or need support, please:
+
+- 📫 Open an issue
+- 🌟 Star the repository if you find it helpful
