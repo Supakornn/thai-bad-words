@@ -1,0 +1,30 @@
+{
+  "name": "thai-bad-words",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SIT-SandBox/thai-bad-words.git"
+  },
+  "keywords": [
+    "words",
+    "words-check",
+    "bad",
+    "bad-words",
+    "thai-bad-words"
+  ],
+  "author": "SIT-SandBox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SIT-SandBox/thai-bad-words/issues"
+  },
+  "homepage": "https://github.com/SIT-SandBox/thai-bad-words#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3"
+  }
+}
