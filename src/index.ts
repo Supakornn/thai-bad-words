@@ -1,41 +1,13 @@
-let prefixes: string[] = [
-    "กู", "มึง", "ไอ้", "อี", "ไอ", "ผม", "คุณ", "กระผม", "เธอ", "พ่อ", "แม่", "นาย"
-];
+import { Trie } from './trie/Trie';
+import { 
+    prefixes, 
+    ignoreList, 
+    rootWords, 
+    badWordsList, 
+    generateBadWords 
+} from './words/wordLists';
 
-let ignoreList: string[] = [
-    "หีบ", "สัสดี", "หน้าหีบ", "ตด",
-];
-
-let rootWords: string[] = [
-    "ควย", "เหี้ย", "หี", "สัส", "เชี่ย", "แรด", "กระหรี่", "ชิบหาย", "ตอแหล",
-    "ฟาย", "แม่ง", "แสด", "ถุย", "เดรัจฉาน", "ชาติชั่ว", "นรก", "หมา", "หมอย",
-    "สัตว์", "จัญไร", "เลว", "ทราม", "สถุน", "ระยำ", "อัปรีย์", "ต่ำตม", "กาก", "ส้นตีน", "หิวตีน",
-    "ส้นตีน", "ขยะ", "ปิศาจ", "ขี้แพ้", "บัดซบ", "จังไร", "โสโครก", "เฮงซวย", "ตลาดล่าง", "ควาย",
-    "ปัญญาอ่อน", "เส็งเคร็ง", "โง่", "โง่เง่า", "กะหรี่", "ดอกทอง", "ดอกกระหรี่", "บ้า", "ควย", "มึง", "อีดอก", "หน้าปลวก"
-];
-
-let badWordsList: string[] = [];
-
-function generateBadWords(): void {
-    badWordsList = [];
-    for (let prefix of prefixes) {
-        for (let rootWord of rootWords) {
-            badWordsList.push(`${prefix}${rootWord}`);
-        }
-    }
-    badWordsList = [...badWordsList, ...rootWords];
-}
-
-export function addPrefixes(newPrefixes: string[]): void {
-    prefixes = [...prefixes, ...newPrefixes];
-    generateBadWords();
-}
-
-export function addIgnoreList(newIgnoreWords: string[]): void {
-    ignoreList = [...ignoreList, ...newIgnoreWords];
-}
-
-generateBadWords();
+const trie = new Trie();
 
 export function checkBadWords(input: string): void {
     const cleanedInput = input.replace(/[^a-zA-Z0-9\u0E00-\u0E7F]/g, '');
@@ -46,27 +18,40 @@ export function checkBadWords(input: string): void {
         }
     }
 
-    const regexList = badWordsList.map(word => {
-        return new RegExp(word.split('').join('\\s*'), 'i');
-    });
-
-    for (let regex of regexList) {
-        if (regex.test(cleanedInput)) {
-            throw new Error(`Bad words detected! Found: ${cleanedInput}`);
-        }
+    if (trie.search(cleanedInput)) {
+        throw new Error(`Bad words detected! Found: ${cleanedInput}`);
     }
 }
 
 export function addBadWords(newBadWords: string[]): void {
-    rootWords = [...rootWords, ...newBadWords];
+    rootWords.push(...newBadWords);
     generateBadWords();
+    newBadWords.forEach(word => trie.insert(word));
 }
 
 export function removeBadWords(wordsToRemove: string[]): void {
-    rootWords = rootWords.filter(word => !wordsToRemove.includes(word));
+    const updatedRootWords = rootWords.filter(word => !wordsToRemove.includes(word));
+    rootWords.length = 0;
+    rootWords.push(...updatedRootWords);
     generateBadWords();
+    const newTrie = new Trie();
+    badWordsList.forEach(word => newTrie.insert(word));
+    trie.root = newTrie.root;
+}
+
+export function addPrefixes(newPrefixes: string[]): void {
+    prefixes.push(...newPrefixes);
+    generateBadWords();
+}
+
+export function addIgnoreList(newIgnoreWords: string[]): void {
+    ignoreList.push(...newIgnoreWords);
 }
 
 export function getBadWords(): string[] {
     return badWordsList;
 }
+
+// Init
+generateBadWords();
+badWordsList.forEach(word => trie.insert(word));
